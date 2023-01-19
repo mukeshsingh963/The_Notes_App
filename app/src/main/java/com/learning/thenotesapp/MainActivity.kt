@@ -12,6 +12,8 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.learning.thenotesapp.Adapter.NotesAdapter
 import com.learning.thenotesapp.Database.NoteDatabase
@@ -23,6 +25,7 @@ import com.learning.thenotesapp.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity(), NotesAdapter.NotesClickListener, PopupMenu.OnMenuItemClickListener {
     private lateinit var binding: ActivityMainBinding
     private lateinit var database: NoteDatabase
+    lateinit var notesRV: RecyclerView
     lateinit var viewModel: NoteViewModel
     lateinit var adapter: NotesAdapter
     lateinit var selectedNote: Note
@@ -46,12 +49,11 @@ class MainActivity : AppCompatActivity(), NotesAdapter.NotesClickListener, Popup
         initUI()
         viewModel = ViewModelProvider(this,
         ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
-        viewModel.allNotes.observe(this){
-            list->
+        viewModel.allNotes.observe(this,{ list->
             list?.let {
-                adapter.updateList(list)
+                adapter.updateList(it)
             }
-        }
+        })
         database = NoteDatabase.getDatabase(this)
     }
 
@@ -91,8 +93,11 @@ class MainActivity : AppCompatActivity(), NotesAdapter.NotesClickListener, Popup
     }
 
     override fun onItemClick(note: Note) {
-        val intent = Intent(this,AddNoteActivity::class.java)
+        val intent = Intent(this@MainActivity, AddNoteActivity::class.java)
         intent.putExtra("current_note", note)
+        intent.putExtra("noteTitle", note.title)
+        intent.putExtra("noteDescription", note.note)
+        intent.putExtra("noteId", note.id)
         updateNote.launch(intent)
     }
 

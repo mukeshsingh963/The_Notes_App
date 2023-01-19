@@ -45,7 +45,7 @@ class AddNoteActivity : AppCompatActivity() {
                 if (isUpdate){
                     note = Note( oldNote.id,title,body,formatter.format(Date()))
                 }else{
-                    note = Note( null,title,body,formatter.format(Date()))
+                    note = Note( null ,title,body,formatter.format(Date()))
                 }
                 val intent = Intent()
                 intent.putExtra("current_note", note)

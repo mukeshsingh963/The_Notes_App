@@ -54,8 +54,7 @@
                 android:ems="10"
                 android:fitsSystemWindows="true"
                 android:hint="title"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:inputType="textPersonName" />
 
             <EditText
                 android:id="@+id/noteBody"
@@ -69,8 +68,7 @@
                 android:fitsSystemWindows="true"
                 android:gravity="top"
                 android:hint="title"
-                android:inputType="textPersonName"
-                android:text="Name" />
+                android:inputType="textPersonName" />
         </LinearLayout>
     </LinearLayout>
 

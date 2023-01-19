@@ -16,8 +16,14 @@ class NotesAdapter(private val context: Context, private val listener: NotesClic
     RecyclerView.Adapter<NotesAdapter.NoteVH>() {
 
     private val noteList = ArrayList<Note>()
-    private val fullList = ArrayList<Note>()
 
+    inner class NoteVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+        val notesLayout = itemView.findViewById<CardView>(R.id.card_layout)
+        val title = itemView.findViewById<TextView>(R.id.tv_title)
+        val noteTv = itemView.findViewById<TextView>(R.id.tv_note)
+        val date = itemView.findViewById<TextView>(R.id.tv_date)
+    }
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NoteVH {
         return NoteVH(
             LayoutInflater.from(context).inflate(R.layout.list_items, parent, false)
@@ -56,16 +62,14 @@ class NotesAdapter(private val context: Context, private val listener: NotesClic
     }
 
     fun updateList(newList: List<Note>){
-        fullList.clear()
-        fullList.addAll(newList)
-
-        noteList.addAll(fullList)
+        noteList.clear()
+        noteList.addAll(newList)
         notifyDataSetChanged()
     }
 
     fun filter(search: String){
     noteList.clear()
-        for (item in fullList){
+        for (item in noteList){
             if(item.title?.lowercase()?.contains(search.lowercase()) == true ||
                     item.note?.lowercase()?.contains(search.lowercase()) == true){
                 noteList.add(item)
@@ -73,7 +77,7 @@ class NotesAdapter(private val context: Context, private val listener: NotesClic
         }
         notifyDataSetChanged()
     }
-    fun randomColor(): Int {
+    private fun randomColor(): Int {
         val list = ArrayList<Int>()
         list.add(R.color.NoteColor1)
         list.add(R.color.NoteColor2)
@@ -90,15 +94,7 @@ class NotesAdapter(private val context: Context, private val listener: NotesClic
         return list[randomIndex]
     }
 
-    inner class NoteVH(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
-        val notesLayout = itemView.findViewById<CardView>(R.id.card_layout)
-        val title = itemView.findViewById<TextView>(R.id.tv_title)
-        val noteTv = itemView.findViewById<TextView>(R.id.tv_note)
-        val date = itemView.findViewById<TextView>(R.id.tv_date)
-
-
-    }
 
     interface NotesClickListener {
         fun onItemClick(note: Note)
