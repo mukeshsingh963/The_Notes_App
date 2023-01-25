@@ -12,14 +12,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.cardview.widget.CardView
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.learning.thenotesapp.Adapter.NotesAdapter
 import com.learning.thenotesapp.Database.NoteDatabase
 import com.learning.thenotesapp.Models.Note
 import com.learning.thenotesapp.Models.NoteViewModel
-import com.learning.thenotesapp.databinding.ActivityAddNoteBinding
 import com.learning.thenotesapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity(), NotesAdapter.NotesClickListener, PopupMenu.OnMenuItemClickListener {
@@ -47,13 +45,7 @@ class MainActivity : AppCompatActivity(), NotesAdapter.NotesClickListener, Popup
 
 
         initUI()
-        viewModel = ViewModelProvider(this,
-        ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
-        viewModel.allNotes.observe(this,{ list->
-            list?.let {
-                adapter.updateList(it)
-            }
-        })
+        observer()
         database = NoteDatabase.getDatabase(this)
     }
 
@@ -91,7 +83,15 @@ class MainActivity : AppCompatActivity(), NotesAdapter.NotesClickListener, Popup
 
 
     }
-
+    private fun observer(){
+        viewModel = ViewModelProvider(this,
+            ViewModelProvider.AndroidViewModelFactory.getInstance(application)).get(NoteViewModel::class.java)
+        viewModel.allNotes.observe(this,{ list->
+            list?.let {
+                adapter.updateList(it)
+            }
+        })
+    }
     override fun onItemClick(note: Note) {
         val intent = Intent(this@MainActivity, AddNoteActivity::class.java)
         intent.putExtra("current_note", note)
