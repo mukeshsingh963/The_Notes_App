@@ -77,22 +77,6 @@ class NotesAdapter(private val context: Context, private val listener: NotesClic
         }
         notifyDataSetChanged()
     }
-//    private fun randomColor(): Int {
-//        val list = ArrayList<Int>()
-//        list.add(R.color.NoteColor1)
-//        list.add(R.color.NoteColor2)
-//        list.add(R.color.NoteColor3)
-//        list.add(R.color.NoteColor4)
-//        list.add(R.color.NoteColor5)
-//        list.add(R.color.NoteColor6)
-//        list.add(R.color.NoteColor7)
-//        list.add(R.color.NoteColor8)
-//        list.add(R.color.NoteColor9)
-//
-//        val seed = System.currentTimeMillis().toInt()
-//        val randomIndex = Random(seed).nextInt(list.size)
-//        return list[randomIndex]
-//    }
 
 
 

@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="The Notes App"
+        android:gravity="center"
+        android:layout_margin="16dp"
+        android:padding="16dp"
+        style="@style/Theme.Design.Light.NoActionBar"
+        />
+
+    <EditText
+        android:id="@+id/email_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textEmailAddress"
+        android:hint="Enter Your Email"
+        android:layout_margin="16dp"
+        />
+    <EditText
+        android:id="@+id/pswd_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Enter Your Password"
+        android:inputType="textPassword"
+        android:layout_margin="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <CheckBox
+            android:id="@+id/show_pswd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="show Password"
+            android:layout_gravity="left"
+            android:layout_weight="1"
+            android:layout_marginStart="16dp"/>
+        <TextView
+            android:id="@+id/user_register"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="New User? Register Here."
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:layout_gravity="center"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:text="Login"/>
+
+</LinearLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
