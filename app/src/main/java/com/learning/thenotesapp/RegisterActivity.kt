@@ -9,18 +9,16 @@ import android.os.Looper
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil.setContentView
+import com.learning.thenotesapp.Utilities.PREFRENCE_NAME
 import com.learning.thenotesapp.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
-    private val sharedPrefFile = "userSharedPref"
-    private val handler = Handler(Looper.getMainLooper())
+     private val handler = Handler(Looper.getMainLooper())
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
     }
 
     private fun initUI(){
-        val sharedPreferences : SharedPreferences = this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+        val sharedPreferences : SharedPreferences = this.getSharedPreferences(PREFRENCE_NAME, Context.MODE_PRIVATE)
 
         fun isValidEmail(email: String): Boolean {
             return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -46,18 +44,15 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener{
-            var userEmail = binding.emailUser.text.toString()
+            val userEmail = binding.emailUser.text.toString()
             val userPassword = binding.pswdUser.text.toString()
-            Log.d("Test", userEmail.toString())
-            Log.d("Test", userPassword)
-            if (isValidEmail(userEmail.toString())){
+            if (isValidEmail(userEmail)){
                 if (userPassword != null && userPassword.length >= 5){
 
                     val editor : SharedPreferences.Editor = sharedPreferences.edit()
                     editor.putString("userEmail", userEmail)
                     editor.putString("userPass",userPassword)
                     editor.apply()
-                    editor.commit()
                     Toast.makeText(this, "You are Successfully registered in", Toast.LENGTH_SHORT).show()
                     handler.postDelayed({
                         val intent = Intent(this, LoginActivity::class.java)

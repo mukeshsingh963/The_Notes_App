@@ -9,18 +9,16 @@ import android.os.Looper
 import android.text.TextUtils
 import android.text.method.HideReturnsTransformationMethod
 import android.text.method.PasswordTransformationMethod
-import android.util.Log
 import android.util.Patterns
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.app.AppCompatDelegate
+import com.learning.thenotesapp.Utilities.PREFRENCE_NAME
 import com.learning.thenotesapp.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
     private val handler = Handler(Looper.getMainLooper())
-    private val sharedPrefFile = "userSharedPref"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -33,7 +31,7 @@ class LoginActivity : AppCompatActivity() {
     private fun initUI() {
 
         val sharedPreferences: SharedPreferences =
-            this.getSharedPreferences(sharedPrefFile, Context.MODE_PRIVATE)
+            this.getSharedPreferences(PREFRENCE_NAME, Context.MODE_PRIVATE)
 
         fun isValidEmail(email: String): Boolean {
             return !TextUtils.isEmpty(email) && Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -50,13 +48,11 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener {
-            var userEmail = binding.emailUser.text.toString()
+            val userEmail = binding.emailUser.text.toString()
             val userPassword = binding.pswdUser.text.toString()
             val sharedEmailValue = sharedPreferences.getString("userEmail", "default")
             val sharedPassValue = sharedPreferences.getString("userPass", "default")
-            Log.d("Test", userEmail.toString())
-            Log.d("Test", userPassword)
-            if (isValidEmail(userEmail.toString())) {
+            if (isValidEmail(userEmail)) {
                 if (userPassword != null && userPassword.length >= 5) {
                     if (userEmail == sharedEmailValue && userPassword == sharedPassValue) {
                         Toast.makeText(this, "You are Successfully logged in", Toast.LENGTH_SHORT)
